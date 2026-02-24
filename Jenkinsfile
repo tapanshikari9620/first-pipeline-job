@@ -6,24 +6,31 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'develop',
-                url: 'https://github.com/tapanshikari9620/first-pipeline-job.git'
+                git 'https://github.com/tapanshikari9620/first-pipeline-job.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build Successful ✅'
+        }
+        failure {
+            echo 'Build Failed ❌'
         }
     }
 }
